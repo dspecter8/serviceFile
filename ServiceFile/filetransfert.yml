@@ -1,0 +1,6 @@
+server:
+  rootPath: /api/*
+  applicationConnectors:
+    - type: http
+      port: 9999
+uploadsDir: ./uploads
