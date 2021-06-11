@@ -85,29 +85,13 @@ public class DownUploadResource {
 	}
 
 
-	/*
-	@Path("/down")
-	@GET
-	public Response downloadPdfFile() {
-		StreamingOutput fileStream = new StreamingOutput() {
-			@Override
-			public void write(java.io.OutputStream output) throws IOException, WebApplicationException {
-				try {
-					java.nio.file.Path path = Paths.get("C:/temp/test.pdf");
-					byte[] data = Files.readAllBytes(path);
-					output.write(data);
-					output.flush();
-				} catch (Exception e) {
-					throw new WebApplicationException("File Not Found !!");
-				}
-			}
-		};
-		return Response.ok(fileStream, MediaType.APPLICATION_OCTET_STREAM)
-				.header("content-disposition", "attachment; filename = myfile.pdf").build();
-	}
-	*/
 
-	private String getUploadDir() {
+	public DownUploadResource() {
+		
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getUploadDir() {
 		return uploadDir;
 	}
 }

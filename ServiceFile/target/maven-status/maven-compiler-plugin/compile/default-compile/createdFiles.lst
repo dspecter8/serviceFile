@@ -1,6 +1,7 @@
-org\FileTransfertV5\ServiceFile\App.class
 org\FileTransfertV5\ServiceFile\DownUploadConfiguration.class
-org\FileTransfertV5\ServiceFile\DownUploadResource.class
 org\FileTransfertV5\ServiceFile\AppMain.class
-org\FileTransfertV5\ServiceFile\DownUploadResource$1.class
 org\FileTransfertV5\ServiceFile\FileInfo.class
+org\FileTransfertV5\ServiceFile\App.class
+org\FileTransfertV5\ServiceFile\DownUploadResource.class
+org\FileTransfertV5\ServiceFile\DownUploadResource$1.class
+org\FileTransfertV5\ServiceFile\DownLoadResources.class

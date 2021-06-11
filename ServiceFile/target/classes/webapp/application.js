@@ -24,7 +24,54 @@ class FileInfo {
    }
 }
 
+class Downloadservice{
+    constructor(){
 
+    }
+    onDownloadSucces(callback=null){
+        if(collback===null){
+            if(this._onDownloadSuccess){
+                this._onDownloadSuccess();
+            }
+        }else{
+            this._onDownloadSuccess=callback;
+        }
+    }
+
+        onDownloadFailed(callback=null){
+        if(collback===null){
+            if(this.onDownloadFailed){
+                this._onDownloadSuccess();
+            }
+        }else{
+            this.onDownloadFailed=callback;
+        }
+    }
+
+    download(filename){
+        const formData1 = new FormData();
+        const xhr1 = new XMLHttpRequest();
+        const path1 = window.location + 'api/uploads/downloads' + ('/down');
+
+        formData1.append('filename',filename);
+        xhr1.open('POST',path1,true);
+
+        xhr1.onreadystatechange =(evt)=>{
+            const target = evt.target;
+
+            if (target.readyState===4 && (target.status === 200 || target.status === 201)) {
+                const data = JSON.parse(target.responseText) || {};
+
+                return this.onUploadSuccess(data);
+
+            } else if (target.readyState===4 && target.status != 200) {
+                return this.onUploadFailed(target.responseText);
+            }
+        }
+        xhr1.send(formData1);
+    }
+
+}
 class UploadService {
 
     constructor() {
@@ -47,7 +94,7 @@ class UploadService {
         }
     }
 
-    upload(fileData, withAuth=false, token=null) {
+    upload(fileData) {
         const formData = new FormData();
         const xhr = new XMLHttpRequest();
         const path = window.location + 'api/upload' + ('/up');
@@ -99,12 +146,7 @@ const App = React.createClass({
 
     onSubmit: function (evt) {
         evt.preventDefault();
-        const fileData = this.refs.fileEl.files[0];
-        if (this.state.withAuth) {
-            var token = localStorage.getItem('dropwizardupload.token');
-            return this.uploadService.upload(fileData, true, token);
-        }
-
+        const fileData = this.refs.f1.files[0];
         this.uploadService.upload(fileData);
 
         return false;
@@ -117,7 +159,7 @@ const App = React.createClass({
             {title1}
             <form method="post" onSubmit={this.onSubmit}>
               <label>File Transfert</label>
-              <input type="file" name="fileData" className="form-control" ref="fileEl" />
+              <input type="file" name="fileData" className="form-control" ref="f1" />
               <button>Upload</button>
             </form>
           </div>
@@ -137,7 +179,14 @@ const UploadedFilesInfoApp = React.createClass({
 
     componentDidMount: function() {
         this.refresh();
-        setInterval(() => this.refresh.call(this, null), 5000);
+        setInterval(() => this.refresh.call(this, null), 500);
+    },
+
+    onDonwload : function(evt,url){
+        evt.preventDefault();
+        const filename = url;
+        this.Downloadservice(filename);
+        return false;
     },
 
     refresh: function() {
@@ -178,7 +227,6 @@ const UploadedFilesInfoApp = React.createClass({
             .files
             .map((f) => <li><a href={'#/' + f.fileName} title={f.fileName}>{f.realName()} (<small>{f.sizeFile()}</small>)</a>
             <button> Download</button></li>);
-
         return (
           <div className="wrapper">
             <h2>Uploaded Files</h2>
