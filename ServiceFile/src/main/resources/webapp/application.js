@@ -54,7 +54,7 @@ class Downloadservice{
         const path1 = window.location + 'api/uploads/downloads' + ('/down');
 
         formData1.append('filename',filename);
-        xhr1.open('POST',path1,true);
+        xhr1.open('GET',path1,true);
 
         xhr1.onreadystatechange =(evt)=>{
             const target = evt.target;
@@ -222,11 +222,13 @@ const UploadedFilesInfoApp = React.createClass({
      render: function() {
         
         this.uploadService = new UploadService();
-
+        
         const children = this.state
             .files
-            .map((f) => <li><a href={'#/' + f.fileName} title={f.fileName}>{f.realName()} (<small>{f.sizeFile()}</small>)</a>
-            <button> Download</button></li>);
+            .map((f) =><li><a href={'#/' + f.fileName} title={f.fileName}>{f.realName()} (<small>{f.sizeFile()}</small>)</a>
+            <button> Download</button></li>
+                
+             );       
         return (
           <div className="wrapper">
             <h2>Uploaded Files</h2>
